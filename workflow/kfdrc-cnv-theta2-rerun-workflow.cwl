@@ -228,3 +228,19 @@ steps:
 
 $namespaces:
   sbg: https://sevenbridges.com
+hints:
+- class: "sbg:maxNumberOfParallelInstances"
+  value: 6
+"sbg:license": Apache License 2.0
+"sbg:publisher": KFDRC
+"sbg:categories":
+- BAM
+- CNV
+- CNVKIT
+- CONTROLFREEC
+- CRAM
+- THETA2
+- VCF
+"sbg:links":
+- id: 'https://github.com/childrens-bti/kf-somatic-workflow-cnh/releases/tag/v1.0.0'
+  label: github-release
