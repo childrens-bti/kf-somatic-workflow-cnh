@@ -139,6 +139,13 @@ steps:
       blacklist_regions: cnv_blacklist_regions
       scatter_count: {valueFrom: $(0)}
     out: [prescatter_bed]
+  mode_defaults:
+    run: ../tools/mode_defaults.cwl
+    in:
+      input_mode: wgs_or_wxs
+      cnvkit_wgs_mode: cnvkit_wgs_mode
+      i_flag: i_flag
+    out: [out_cnvkit_wgs_mode, out_i_flag]
   bedtools_intersect_germline:
     run: ../tools/bedtools_intersect.cwl
     when: $(inputs.input_vcf != null)
@@ -146,9 +153,7 @@ steps:
       input_vcf: b_allele
       input_bed_file: prepare_regions_unpadded_cnv/prescatter_bed
       output_basename: output_basename
-      flag:
-        source: [i_flag, wgs_or_wxs]
-        valueFrom: "$(self[0] != null ? self[0] : (self[1] == 'WGS' ? 'N' : null))"
+      flag: mode_defaults/out_i_flag
     out: [intersected_vcf]
   gatk_filter_germline:
     run: ../tools/gatk_filter_germline_variant.cwl
@@ -195,9 +200,7 @@ steps:
       normal_sample_name: input_normal_name
       capture_regions: prepare_regions_unpadded_cnv/prescatter_bed
       blacklist_regions: cnv_blacklist_regions
-      wgs_mode:
-        source: [cnvkit_wgs_mode, wgs_or_wxs]
-        valueFrom: "$(self[0] != null ? self[0] : (self[1] == 'WGS' ? 'Y' : 'N'))"
+      wgs_mode: mode_defaults/out_cnvkit_wgs_mode
       b_allele_vcf: gatk_filter_germline/filtered_pass_vcf
       annotation_file: cnvkit_annotation_file
       output_basename: output_basename
