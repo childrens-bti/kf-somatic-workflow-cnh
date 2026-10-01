@@ -49,17 +49,17 @@ inputs:
   wgs_or_wxs:
     type: {type: enum, name: wgs_or_wxs, symbols: [WGS, WXS]}
   output_basename: {type: string}
-  run_calmd_bam: {type: boolean?, default: false, doc: Force calmd even when an input is BAM.}
+  run_calmd_bam: {type: 'boolean?', default: false, doc: Force calmd even when an input is BAM.}
   cfree_ploidy: {type: 'int[]', doc: Ploidy possibilities for Control-FREEC.}
-  cfree_threads: {type: int?, default: 16}
+  cfree_threads: {type: 'int?', default: 16}
   cfree_mate_orientation_control:
     type: ['null', {type: enum, name: mate_orientation_control, symbols: ["0", FR, RF, FF]}]
     default: FR
   cfree_mate_orientation_sample:
     type: ['null', {type: enum, name: mate_orientation_sample, symbols: ["0", FR, RF, FF]}]
     default: FR
-  cfree_coeff_var: {type: float?, default: 0.05}
-  cfree_contamination_adjustment: {type: boolean?}
+  cfree_coeff_var: {type: 'float?', default: 0.05}
+  cfree_contamination_adjustment: {type: 'boolean?'}
   cfree_sex:
     type: ['null', {type: enum, name: cfree_sex, symbols: [XX, XY]}]
     default: XX
@@ -71,8 +71,8 @@ inputs:
   cnvkit_sex:
     type: ['null', {type: enum, name: cnvkit_sex, symbols: [x, y]}]
     default: x
-  cnvkit_wgs_mode: {type: string?, doc: Set to Y for WGS; inferred from wgs_or_wxs when omitted.}
-  i_flag: {type: string?, doc: Set to N to skip intersecting the germline VCF; defaults to N for WGS.}
+  cnvkit_wgs_mode: {type: 'string?', doc: Set to Y for WGS; inferred from wgs_or_wxs when omitted.}
+  i_flag: {type: 'string?', doc: Set to N to skip intersecting the germline VCF; defaults to N for WGS.}
 
   b_allele:
     type: File?
@@ -85,8 +85,8 @@ inputs:
   combined_include_expression:
     type: string?
     default: 'FILTER="PASS" && (INFO/STATUS="Germline" | INFO/STATUS="StrongSomatic")'
-  combined_exclude_expression: {type: string?}
-  min_theta2_frac: {type: float?, default: 0.01}
+  combined_exclude_expression: {type: 'string?'}
+  min_theta2_frac: {type: 'float?', default: 0.01}
 
 outputs:
   ctrlfreec_pval: {type: File, outputSource: controlfreec/ctrlfreec_pval}
@@ -94,18 +94,18 @@ outputs:
   ctrlfreec_pngs: {type: 'File[]', outputSource: controlfreec/ctrlfreec_pngs}
   ctrlfreec_bam_ratio: {type: File, outputSource: controlfreec/ctrlfreec_bam_ratio}
   ctrlfreec_bam_seg: {type: File, outputSource: controlfreec/ctrlfreec_bam_seg}
-  ctrlfreec_baf: {type: File?, outputSource: controlfreec/ctrlfreec_baf}
+  ctrlfreec_baf: {type: 'File?', outputSource: controlfreec/ctrlfreec_baf}
   ctrlfreec_info: {type: File, outputSource: controlfreec/ctrlfreec_info}
   cnvkit_cnr: {type: File, outputSource: cnvkit/cnvkit_cnr}
-  cnvkit_cnn_output: {type: File?, outputSource: cnvkit/cnvkit_cnn_output}
+  cnvkit_cnn_output: {type: 'File?', outputSource: cnvkit/cnvkit_cnn_output}
   cnvkit_calls: {type: File, outputSource: cnvkit/cnvkit_calls}
   cnvkit_metrics: {type: File, outputSource: cnvkit/cnvkit_metrics}
   cnvkit_gainloss: {type: File, outputSource: cnvkit/cnvkit_gainloss}
   cnvkit_seg: {type: File, outputSource: cnvkit/cnvkit_seg}
   cnvkit_scatter_plot: {type: File, outputSource: cnvkit/cnvkit_scatter_plot}
   cnvkit_diagram: {type: File, outputSource: cnvkit/cnvkit_diagram}
-  theta2_calls: {type: File?, outputSource: theta2_purity/theta2_adjusted_cns}
-  theta2_seg: {type: File?, outputSource: theta2_purity/theta2_adjusted_seg}
+  theta2_calls: {type: 'File?', outputSource: theta2_purity/theta2_adjusted_cns}
+  theta2_seg: {type: 'File?', outputSource: theta2_purity/theta2_adjusted_seg}
   theta2_subclonal_results: {type: ['null', 'File[]'], outputSource: expression_flatten_subclonal_results/output}
   theta2_subclonal_cns: {type: ['null', 'File[]'], outputSource: theta2_purity/theta2_subclonal_cns}
   theta2_subclone_seg: {type: ['null', 'File[]'], outputSource: theta2_purity/theta2_subclone_seg}
