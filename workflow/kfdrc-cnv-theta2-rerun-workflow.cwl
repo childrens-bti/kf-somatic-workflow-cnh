@@ -27,8 +27,8 @@ inputs:
     type: File
     secondaryFiles: [{pattern: ".bai", required: false}, {pattern: "^.bai", required: false}, {pattern: ".crai", required: false}, {pattern: "^.crai", required: false}]
     doc: Matched-normal BAM or CRAM and its index.
-  input_tumor_name: {type: string}
-  input_normal_name: {type: string}
+  input_tumor_name: {type: string, doc: Desired sample name for tumor in output files.}
+  input_normal_name: {type: string, doc: Desired sample name for normal in output files.}
   indexed_reference_fasta:
     type: File
     secondaryFiles: [{pattern: ".fai", required: true}, {pattern: "^.dict", required: true}]
@@ -48,21 +48,25 @@ inputs:
       name: somatic-hg38_CNV_and_centromere_blacklist.hg38liftover.list}
   wgs_or_wxs:
     type: {type: enum, name: wgs_or_wxs, symbols: [WGS, WXS]}
-  output_basename: {type: string}
+    doc: Select whether this run is WGS or WXS.
+  output_basename: {type: string, doc: String value to use as the basename for outputs.}
   run_calmd_bam: {type: 'boolean?', default: false, doc: Force calmd even when an input is BAM.}
   cfree_ploidy: {type: 'int[]', doc: Ploidy possibilities for Control-FREEC.}
-  cfree_threads: {type: 'int?', default: 16}
+  cfree_threads: {type: 'int?', default: 16, doc: "Control-FREEC threads; 16 is recommended because additional threads can saturate I/O."}
   cfree_mate_orientation_control:
     type: ['null', {type: enum, name: mate_orientation_control, symbols: ["0", FR, RF, FF]}]
     default: FR
+    doc: "0 for single ends; RF for Illumina mate-pairs; FR for Illumina paired-ends; FF for SOLiD mate-pairs."
   cfree_mate_orientation_sample:
     type: ['null', {type: enum, name: mate_orientation_sample, symbols: ["0", FR, RF, FF]}]
     default: FR
-  cfree_coeff_var: {type: 'float?', default: 0.05}
-  cfree_contamination_adjustment: {type: 'boolean?'}
+    doc: "0 for single ends; RF for Illumina mate-pairs; FR for Illumina paired-ends; FF for SOLiD mate-pairs."
+  cfree_coeff_var: {type: 'float?', default: 0.05, doc: "Coefficient of variation used to set the Control-FREEC window size; 0.05 is recommended."}
+  cfree_contamination_adjustment: {type: 'boolean?', doc: Set to true to have Control-FREEC estimate normal contamination.}
   cfree_sex:
     type: ['null', {type: enum, name: cfree_sex, symbols: [XX, XY]}]
     default: XX
+    doc: "Known sex for Control-FREEC: XX for female or XY for male."
   cnvkit_annotation_file:
     type: File
     doc: refFlat annotation file.
@@ -71,6 +75,7 @@ inputs:
   cnvkit_sex:
     type: ['null', {type: enum, name: cnvkit_sex, symbols: [x, y]}]
     default: x
+    doc: "Sex for CNVkit: x for female or y for male."
   cnvkit_wgs_mode: {type: 'string?', doc: Set to Y for WGS; inferred from wgs_or_wxs when omitted.}
   i_flag: {type: 'string?', doc: Set to N to skip intersecting the germline VCF; defaults to N for WGS.}
 
@@ -85,8 +90,9 @@ inputs:
   combined_include_expression:
     type: string?
     default: 'FILTER="PASS" && (INFO/STATUS="Germline" | INFO/STATUS="StrongSomatic")'
-  combined_exclude_expression: {type: 'string?'}
-  min_theta2_frac: {type: 'float?', default: 0.01}
+    doc: THeTa2 filter expression used to include VarDict calls.
+  combined_exclude_expression: {type: 'string?', doc: THeTa2 filter expression used to exclude VarDict calls.}
+  min_theta2_frac: {type: 'float?', default: 0.01, doc: "Minimum genome fraction with copy-number alterations for THeTa2; 0.01 is recommended."}
 
 outputs:
   ctrlfreec_pval: {type: File, outputSource: controlfreec/ctrlfreec_pval}
