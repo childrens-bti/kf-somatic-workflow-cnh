@@ -1,4 +1,4 @@
-# Kids First DRC Somatic Variant Workflow
+# Kids First DRC Somatic Variant Workflow (CNH)
 
 <p align="center">
   <img src="https://github.com/d3b-center/d3b-research-workflows/raw/master/doc/kfdrc-logo-sm.png">
@@ -15,6 +15,24 @@ If you would like to run this workflow using the CAVATICA public app, a basic pr
 Alternatively, if you'd like to run it locally using `cwltool`, a basic primer on that can be found [here](https://www.notion.so/d3b/Starting-From-Scratch-Running-CWLtool-b8dbbde2dc7742e4aff290b0a878344d) and combined with app-specific info from the readme below.
 This workflow is the current production workflow, equivalent to this [CAVATICA public app](https://cavatica.sbgenomics.com/public/apps#cavatica/apps-publisher/kfdrc-somatic-variant-workflow).
 
+
+## CNV and THeTa2 Rerun Workflow
+
+The [CNV and THeTa2 rerun workflow](./workflow/kfdrc-cnv-theta2-rerun-workflow.cwl) reruns Control-FREEC, CNVkit, and the downstream THeTa2 purity adjustment for an existing tumor/normal pair. It supports both WGS and WXS and uses the same shared steps, parameters, defaults, and output interface as the corresponding portions of the full somatic workflow. It does not run GATK CNV or AmpliconArchitect.
+
+VarDict is not rerun. Instead, provide the paired `vardict_prepass_vcf` from the original somatic workflow. Required inputs are:
+
+- Indexed tumor and matched-normal BAM or CRAM files
+- Tumor and normal sample names matching the VarDict VCF sample columns
+- Reference FASTA with `.fai` and `.dict` files
+- WGS calling intervals or WXS capture intervals
+- CNVkit `refFlat` annotation file
+- Existing paired VarDict prepass VCF
+- `wgs_or_wxs`, `output_basename`, and `cfree_ploidy`
+
+The optional indexed `b_allele` VCF is recommended for B-allele-frequency and LOH-aware calling. The CNV blacklist and common hg38 reference files have the same CAVATICA suggested values as the full workflow. Initialize the pinned annotation dependency before local use with `git submodule update --init kf-annotation-tools`.
+
+Validate the wrapper with `cwltool --validate workflow/kfdrc-cnv-theta2-rerun-workflow.cwl`.
 
 ## Somatic Variant Workflow Callers
 
