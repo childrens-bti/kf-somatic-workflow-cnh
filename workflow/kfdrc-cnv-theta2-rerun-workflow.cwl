@@ -92,26 +92,26 @@ inputs:
   min_theta2_frac: {type: 'float?', default: 0.01, doc: "Minimum genome fraction with copy-number alterations for THeTa2; 0.01 is recommended."}
 
 outputs:
-  ctrlfreec_pval: {type: File, outputSource: controlfreec/ctrlfreec_pval}
-  ctrlfreec_config: {type: File, outputSource: controlfreec/ctrlfreec_config}
-  ctrlfreec_pngs: {type: 'File[]', outputSource: controlfreec/ctrlfreec_pngs}
-  ctrlfreec_bam_ratio: {type: File, outputSource: controlfreec/ctrlfreec_bam_ratio}
-  ctrlfreec_bam_seg: {type: File, outputSource: controlfreec/ctrlfreec_bam_seg}
-  ctrlfreec_baf: {type: 'File?', outputSource: controlfreec/ctrlfreec_baf}
-  ctrlfreec_info: {type: File, outputSource: controlfreec/ctrlfreec_info}
-  cnvkit_cnr: {type: File, outputSource: cnvkit/cnvkit_cnr}
-  cnvkit_cnn_output: {type: 'File?', outputSource: cnvkit/cnvkit_cnn_output}
-  cnvkit_calls: {type: File, outputSource: cnvkit/cnvkit_calls}
-  cnvkit_metrics: {type: File, outputSource: cnvkit/cnvkit_metrics}
-  cnvkit_gainloss: {type: File, outputSource: cnvkit/cnvkit_gainloss}
-  cnvkit_seg: {type: File, outputSource: cnvkit/cnvkit_seg}
-  cnvkit_scatter_plot: {type: File, outputSource: cnvkit/cnvkit_scatter_plot}
-  cnvkit_diagram: {type: File, outputSource: cnvkit/cnvkit_diagram}
-  theta2_calls: {type: 'File?', outputSource: theta2_purity/theta2_adjusted_cns}
-  theta2_seg: {type: 'File?', outputSource: theta2_purity/theta2_adjusted_seg}
-  theta2_subclonal_results: {type: ['null', 'File[]'], outputSource: expression_flatten_subclonal_results/output}
-  theta2_subclonal_cns: {type: ['null', 'File[]'], outputSource: theta2_purity/theta2_subclonal_cns}
-  theta2_subclone_seg: {type: ['null', 'File[]'], outputSource: theta2_purity/theta2_subclone_seg}
+  ctrlfreec_pval: {type: File, outputSource: controlfreec/ctrlfreec_pval, doc: Control-FREEC p-value results.}
+  ctrlfreec_config: {type: File, outputSource: controlfreec/ctrlfreec_config, doc: Control-FREEC configuration used for this run.}
+  ctrlfreec_pngs: {type: 'File[]', outputSource: controlfreec/ctrlfreec_pngs, doc: Control-FREEC plot images.}
+  ctrlfreec_bam_ratio: {type: File, outputSource: controlfreec/ctrlfreec_bam_ratio, doc: Control-FREEC tumor/normal copy-number ratio table.}
+  ctrlfreec_bam_seg: {type: File, outputSource: controlfreec/ctrlfreec_bam_seg, doc: Control-FREEC segmented copy-number calls.}
+  ctrlfreec_baf: {type: 'File?', outputSource: controlfreec/ctrlfreec_baf, doc: Control-FREEC B-allele-frequency results when a germline VCF is supplied.}
+  ctrlfreec_info: {type: File, outputSource: controlfreec/ctrlfreec_info, doc: Control-FREEC run information.}
+  cnvkit_cnr: {type: File, outputSource: cnvkit/cnvkit_cnr, doc: CNVkit bin-level copy-ratio results.}
+  cnvkit_cnn_output: {type: 'File?', outputSource: cnvkit/cnvkit_cnn_output, doc: CNVkit reference used for calling when produced.}
+  cnvkit_calls: {type: File, outputSource: cnvkit/cnvkit_calls, doc: CNVkit copy-number calls used by THeTa2.}
+  cnvkit_metrics: {type: File, outputSource: cnvkit/cnvkit_metrics, doc: CNVkit quality-control metrics.}
+  cnvkit_gainloss: {type: File, outputSource: cnvkit/cnvkit_gainloss, doc: CNVkit gene-level gain and loss calls.}
+  cnvkit_seg: {type: File, outputSource: cnvkit/cnvkit_seg, doc: CNVkit segmentation table.}
+  cnvkit_scatter_plot: {type: File, outputSource: cnvkit/cnvkit_scatter_plot, doc: CNVkit scatter plot.}
+  cnvkit_diagram: {type: File, outputSource: cnvkit/cnvkit_diagram, doc: CNVkit chromosome diagram.}
+  theta2_calls: {type: 'File?', outputSource: theta2_purity/theta2_adjusted_cns, doc: THeTa2 purity-adjusted CNVkit calls.}
+  theta2_seg: {type: 'File?', outputSource: theta2_purity/theta2_adjusted_seg, doc: THeTa2 purity-adjusted segmentation table.}
+  theta2_subclonal_results: {type: ['null', 'File[]'], outputSource: expression_flatten_subclonal_results/output, doc: Flattened list of THeTa2 subclonal result files.}
+  theta2_subclonal_cns: {type: ['null', 'File[]'], outputSource: theta2_purity/theta2_subclonal_cns, doc: THeTa2 subclonal copy-number calls.}
+  theta2_subclone_seg: {type: ['null', 'File[]'], outputSource: theta2_purity/theta2_subclone_seg, doc: THeTa2 subclonal segmentation tables.}
 
 steps:
   samtools_cram2bam_plus_calmd_tumor:
