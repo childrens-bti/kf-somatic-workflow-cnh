@@ -87,10 +87,7 @@ inputs:
     type: File
     secondaryFiles: [{pattern: ".tbi", required: false}, {pattern: ".csi", required: false}]
     doc: Existing paired VarDict prepass VCF used by THeTa2; VarDict is not rerun.
-  combined_include_expression:
-    type: string?
-    default: 'FILTER="PASS" && (INFO/STATUS="Germline" | INFO/STATUS="StrongSomatic")'
-    doc: THeTa2 filter expression used to include VarDict calls.
+  combined_include_expression: {type: 'string?', doc: "THeTa2 filter expression used to include VarDict calls.", default: FILTER="PASS" && (INFO/STATUS="Germline" | INFO/STATUS="StrongSomatic")}
   combined_exclude_expression: {type: 'string?', doc: THeTa2 filter expression used to exclude VarDict calls.}
   min_theta2_frac: {type: 'float?', default: 0.01, doc: "Minimum genome fraction with copy-number alterations for THeTa2; 0.01 is recommended."}
 
