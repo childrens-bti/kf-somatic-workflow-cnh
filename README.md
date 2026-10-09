@@ -20,7 +20,7 @@ This workflow is the current production workflow, equivalent to this [CAVATICA p
 
 The [CNV and THeTa2 rerun workflow](./workflow/kfdrc-cnv-theta2-rerun-workflow.cwl) reruns Control-FREEC, CNVkit, and the downstream THeTa2 purity adjustment for an existing tumor/normal pair. It supports both WGS and WXS and uses the same shared steps, parameters, defaults, and output interface as the corresponding portions of the full somatic workflow. It does not run GATK CNV or AmpliconArchitect.
 
-VarDict is not rerun. Instead, provide the paired `vardict_prepass_vcf` from the original somatic workflow. Required inputs are:
+The paired `vardict_prepass_vcf` from the original somatic workflow is required because this wrapper does not rerun VarDict. To rerun VarDict, use the full [somatic variant workflow](./workflow/kfdrc-somatic-variant-workflow.cwl). Required inputs are:
 
 - Indexed tumor and matched-normal BAM or CRAM files
 - Tumor and normal sample names matching the VarDict VCF sample columns
